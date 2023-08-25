@@ -61,6 +61,7 @@ struct EmojiMemoryGameView: View {
                     
                 }
                 base.fill().opacity(card.isFaceUp ? 0 : 1)
+                  
             }
         }
     }
