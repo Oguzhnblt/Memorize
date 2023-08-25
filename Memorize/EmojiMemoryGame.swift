@@ -22,7 +22,7 @@ class EmojiMemoryGame: ObservableObject {
             }
         }
     }
-    
+      
    @Published private var model = createMemoryGame()
     
     
