@@ -1,37 +1,42 @@
 //
-//  MemorizeGame.swift
+//  EmojiMemoryGame.swift
 //  Memorize
 //
-//  Created by Oğuz on 24.08.2023.
+//  Created by Oğuz on 25.08.2023.
 //
 
 import Foundation
 
-struct EmojiMemoryGame<CardContent> {
+class EmojiMemoryGame: ObservableObject {
     
-    private(set) var cards: Array<Card>
+    private static let emojis = ["⚡️","😇","🛢️","🤬","💫","🤡","☠️","👽","🤖","🍭","🫡","🥶"]
     
-    init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
-        cards = []
-        // numbersOfPairsOfCards x 2 
-        for pairIndex in 0..<max(2,numberOfPairsOfCards) {
-            let content: CardContent = cardContentFactory(pairIndex)
-            cards.append(Card(content: content))
-            cards.append(Card(content: content))
+    
+    private static func createMemoryGame() -> MemoryGame<String> {
+        return MemoryGame(numberOfPairsOfCards: 12) { pairIndex in
+            if emojis.indices.contains(pairIndex) {
+                return emojis[pairIndex]
+            }
+            else {
+                return "⁉️"
+            }
         }
     }
     
-    mutating func shuffle() {
-        cards.shuffle()
+   @Published private var model = createMemoryGame()
+    
+    
+    var cards: Array<MemoryGame<String>.Card> {
+        return model.cards
     }
     
-    func choose(_ card: Card) {
-        
+    // MARK: Intents
+    
+    func shuffle() {
+        model.shuffle()
     }
     
-    struct Card {
-        var isFaceUp: Bool = true
-        var isMatched: Bool = false
-        let content: CardContent
+    func choose(_ card: MemoryGame<String>.Card ) {
+        model.choose(card)
     }
 }
