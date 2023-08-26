@@ -27,7 +27,7 @@ struct MemoryGame<CardContent> where CardContent : Equatable {
     
     mutating func choose(_ card: Card) {
         guard let chosenIndex = cards.firstIndex(where: { $0.id == card.id }),
-              !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched else {
+              !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched else { 
             return
         }
         

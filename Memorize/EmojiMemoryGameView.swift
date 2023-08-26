@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EmojiMemoryGameView: View {
     
-   @ObservedObject var viewModel: EmojiMemoryGame = EmojiMemoryGame()
+    @ObservedObject var viewModel: EmojiMemoryGame = EmojiMemoryGame()
     
     var body: some View {
         VStack {
@@ -25,20 +25,17 @@ struct EmojiMemoryGameView: View {
     }
     
     // Ekranda görünecek kartların düzen View'i
-    var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 85),spacing: 0)],spacing: 0){
-            ForEach(viewModel.cards) { card in
-                CardView(card)
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .padding(4)
-                    .onTapGesture {
-                        viewModel.choose(card)
-                    }
-            }
+    private var cards: some View {
+        AspectVGrid(items: viewModel.cards, aspectRatio: aspectRatio) {card in
+            CardView(card)
+                .padding(4)
+                .onTapGesture {
+                    viewModel.choose(card)
+                }
         }
-        .foregroundColor(.orange)
-        
+        .foregroundColor(Color.orange)
     }
+}
    
     struct CardView: View {
         
@@ -73,4 +70,4 @@ struct EmojiMemoryGameView: View {
             EmojiMemoryGameView()
         }
     }
-}
+
