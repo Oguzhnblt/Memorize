@@ -11,6 +11,9 @@ struct EmojiMemoryGameView: View {
     
     @ObservedObject var viewModel: EmojiMemoryGame = EmojiMemoryGame()
     
+    private let aspectRatio: CGFloat = 2/3
+    
+    
     var body: some View {
         VStack {
             ScrollView {
@@ -26,23 +29,17 @@ struct EmojiMemoryGameView: View {
     
     // Ekranda görünecek kartların düzen View'i
     private var cards: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 6), spacing: 10) {
-            ForEach(viewModel.cards) { card in
-                CardView(card)
-                    .aspectRatio(0.5, contentMode: .fit)
-                    .onTapGesture {
-                        viewModel.choose(card)
-                    }
-                    .foregroundColor(.orange)
-            }
+        AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
+            CardView(card)
+                .onTapGesture {
+                    viewModel.choose(card)
+                }
+                .foregroundColor(.orange)
+                .padding(4)
         }
-        .padding(10)
+        .frame(minWidth: 250, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
     }
 }
-
-
-
-
 
 struct EmojiMemoryGameView_Previews: PreviewProvider {
     static var previews: some View {
