@@ -21,7 +21,10 @@ struct CardView: View {
             Group {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: Constants.lineWidth)
-                Circle()
+                Path { p in
+                    p.move(to: .zero)
+                }
+                Pie(endAngle: .degrees(240))
                     .opacity(Constants.Pie.opacity)
                     .overlay(
                         
