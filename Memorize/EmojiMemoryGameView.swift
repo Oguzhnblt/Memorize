@@ -34,10 +34,10 @@ struct EmojiMemoryGameView: View {
                 .onTapGesture {
                     viewModel.choose(card)
                 }
-                .foregroundColor(.orange)
                 .padding(4)
         }
-        .frame(minWidth: 250, maxWidth: .infinity, minHeight: 500, maxHeight: .infinity)
+        .frame(minHeight: 750)
+        .foregroundColor(.orange)
     }
 }
 

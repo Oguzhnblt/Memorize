@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
     let items: [Item]
     var aspectRatio: CGFloat = 1
