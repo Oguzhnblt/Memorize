@@ -25,6 +25,7 @@ struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
                 size: geometry.size,
                 atAspectRatio: aspectRatio
             )
+            // Shuffle metodu tetiklendiğinde kartların sırası buradan düzenleniyor.
             LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemSize), spacing: 0)], spacing: 0) {
                 ForEach(items) { item in
                     content(item)
