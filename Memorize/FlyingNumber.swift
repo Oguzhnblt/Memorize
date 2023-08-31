@@ -31,6 +31,6 @@ struct FlyingNumber: View {
 
 struct FlyingNumber_Previews: PreviewProvider {
     static var previews: some View {
-        FlyingNumber(number: 0)
+        FlyingNumber(number: 1)
     }
 }

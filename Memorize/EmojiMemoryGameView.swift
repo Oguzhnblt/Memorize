@@ -46,11 +46,11 @@ struct EmojiMemoryGameView: View {
     
     
     // Ekranda görünecek kartların düzen View'i
-    
     private var cards: some View {
         AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
             if isDealt(card) {
                 CardView(card)
+                    .matchedGeometryEffect(id: card.id, in: dealingNamespace)
                     .overlay(FlyingNumber(number: scoreChange(causedBy: card)))
                     .zIndex(scoreChange(causedBy: card) != 0 ? 100 : 0)
                     .onTapGesture {
@@ -78,18 +78,24 @@ struct EmojiMemoryGameView: View {
     }
     
     // MARK: DECK
+    @State private var isDeckVisible = true
+
     private let deckWidth: CGFloat = 50
+    @Namespace private var dealingNamespace
     
     private var deck: some View {
         ZStack {
-            ForEach(undealtCards) { card in
-                CardView(card)
+            if isDeckVisible {
+                ForEach(undealtCards) { card in
+                    CardView(card)
+                        .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                }
+                Text(" Deal Cards")
+                    .font(.bold(.footnote)())
+                    .foregroundColor(.white)
+                    .position(x: deckWidth / 2, y: deckWidth / (2 * aspectRatio))
+                    .animation(.linear, value: 0)
             }
-            
-            Text(" Deal Cards")
-                .font(.bold(.footnote)())
-                .foregroundColor(.white)
-                .position(x: deckWidth / 2, y: deckWidth / (2 * aspectRatio))
         }
         .frame(width: deckWidth, height: deckWidth / aspectRatio)
         .onTapGesture {
@@ -97,11 +103,12 @@ struct EmojiMemoryGameView: View {
                 for card in viewModel.cards {
                     dealt.insert(card.id)
                 }
+                isDeckVisible = false
             }
         }
         .foregroundColor(.orange)
     }
-
+    
     // MARK: SCORE
     @State private var lastScoreChange: (Int, causedByCardId: String) = (0, "")
     
