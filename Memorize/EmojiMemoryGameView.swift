@@ -90,24 +90,30 @@ struct EmojiMemoryGameView: View {
                 ForEach(undealtCards) { card in
                     CardView(card)
                         .matchedGeometryEffect(id: card.id, in: dealingNamespace)
+                        .transition(.asymmetric(insertion: .identity, removal: .identity))
                 }
                 Text(" Deal Cards")
                     .font(.bold(.footnote)())
                     .foregroundColor(.white)
                     .position(x: deckWidth / 2, y: deckWidth / (2 * aspectRatio))
-                    .animation(.linear, value: 0)
             }
         }
         .frame(width: deckWidth, height: deckWidth / aspectRatio)
         .onTapGesture {
-            withAnimation(.easeInOut(duration: 1)) {
-                for card in viewModel.cards {
-                    dealt.insert(card.id)
-                }
-                isDeckVisible = false
-            }
+          deal()
         }
         .foregroundColor(.orange)
+    }
+    
+    private func deal() {
+        var delay: TimeInterval = 0
+        for card in viewModel.cards {
+            withAnimation(.easeOut(duration: 1).delay(delay)) {
+                _ = dealt.insert(card.id)
+            }
+            delay += 0.25
+        }
+        isDeckVisible = false
     }
     
     // MARK: SCORE
