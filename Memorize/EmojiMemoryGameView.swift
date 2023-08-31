@@ -78,10 +78,11 @@ struct EmojiMemoryGameView: View {
     }
     
     // MARK: DECK
+    
     @State private var isDeckVisible = true
+    @Namespace private var dealingNamespace
 
     private let deckWidth: CGFloat = 50
-    @Namespace private var dealingNamespace
     
     private var deck: some View {
         ZStack {
@@ -110,6 +111,7 @@ struct EmojiMemoryGameView: View {
     }
     
     // MARK: SCORE
+    
     @State private var lastScoreChange: (Int, causedByCardId: String) = (0, "")
     
     private func choose(_ card: Card) {
