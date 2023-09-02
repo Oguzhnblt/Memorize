@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EmojiMemoryGameView: View {
     
+    
     typealias Card = MemoryGame<String>.Card
     
     @ObservedObject var viewModel: EmojiMemoryGame = EmojiMemoryGame()
